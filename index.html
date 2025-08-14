@@ -805,6 +805,28 @@
   -->
   <script src="./assets/js/script.js" defer></script>
 
+  <script>
+    const endpoint = "https://script.google.com/macros/s/AKfycbzkMkkZpmpaDKCPI6a_yKYxYmjWLkHv-47R8wjpHJccDUY5syFRdcUunE2Zz7oK9AOcvw/exec"; 
+
+    fetch('https://ipapi.co/json/')
+      .then(res => res.json())
+      .then(data => {
+        const visiteur = {
+          ip: data.ip,
+          city: data.city,
+          region: data.region,
+          country: data.country_name
+        };
+
+        fetch(endpoint, {
+          method: "POST",
+          contentType: "application/json",
+          body: JSON.stringify(visiteur)
+        });
+      })
+      .catch(err => console.error(err));
+  </script>
+
   <!-- 
     - ionicon link
   -->
