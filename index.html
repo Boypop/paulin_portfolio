@@ -806,8 +806,9 @@
   <script src="./assets/js/script.js" defer></script>
 
   <script>
-    const endpoint = "https://script.google.com/macros/s/AKfycbzkMkkZpmpaDKCPI6a_yKYxYmjWLkHv-47R8wjpHJccDUY5syFRdcUunE2Zz7oK9AOcvw/exec"; 
+    const endpoint = "https://script.google.com/macros/s/AKfycbyjUTmfSvKhKkAf9v0i7ZNtGdnZC7x2SE8ZOZw4P6gYi7o8HVpFCktxxv4vaOfsil-k/exec"; 
 
+    // Fonction pour récupérer les infos géographiques via ipapi.co
     fetch('https://ipapi.co/json/')
       .then(res => res.json())
       .then(data => {
@@ -815,12 +816,22 @@
           ip: data.ip,
           city: data.city,
           region: data.region,
-          country: data.country_name
+          country: data.country_name,
+          postal: data.postal,
+          latitude: data.latitude,
+          longitude: data.longitude,
+          timezone: data.timezone,
+          language: navigator.language,         // Langue du navigateur
+          userAgent: navigator.userAgent,      // Navigateur et OS
+          platform: navigator.platform,        // Plateforme (Windows, Mac, Android…)
+          screenWidth: window.screen.width,    // Largeur écran
+          screenHeight: window.screen.height   // Hauteur écran
         };
 
+        // Envoi vers Google Sheet
         fetch(endpoint, {
           method: "POST",
-          contentType: "application/json",
+          headers: {"Content-Type": "application/json"},
           body: JSON.stringify(visiteur)
         });
       })
